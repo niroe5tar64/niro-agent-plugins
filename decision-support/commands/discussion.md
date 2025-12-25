@@ -17,10 +17,10 @@ argument-hint: [テーマ(任意)]
 ## 実行手順
 
 ### Step 0: ドキュメント読み込み
-以下のファイルを Read ツールで読み込み、内容に従って進行する：
-- `.claude/plugins/decision-support/docs/discussion/workflow.md`
-- `.claude/plugins/decision-support/docs/shared/summary.template.md`
-- `.claude/plugins/decision-support/docs/shared/logging.md`
+以下のドキュメントに従って進行する：
+- @docs/discussion/workflow.md
+- @docs/shared/summary.template.md
+- @docs/shared/logging.md
 
 ### Step 1: 入力の収集
 - `$ARGUMENTS` があればテーマ候補として使う。
