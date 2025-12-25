@@ -4,8 +4,10 @@
   "private": true,
   "description": "業務効率化のためのClaude Codeプラグイン群",
   "scripts": {
-    "build": "bun run build:tsc",
+    "build": "bun run build:tsc && bun run build:plugins",
     "build:tsc": "tsc --build",
+    "build:plugins": "bun run build:decision-support",
+    "build:decision-support": "bun run decision-support/scripts/build.ts",
     "test": "bun test",
     "clean": "rm -rf dist/ *.tsbuildinfo",
     "format": "biome format --write .",
