@@ -1,0 +1,37 @@
+{
+  "name": "niro-agent-plugins",
+  "displayName": "Claude Code Plugins Collection",
+  "description": "開発効率化のためのClaude Codeプラグイン群（意思決定支援など）",
+  "version": "0.1.0",
+  "owner": {
+    "name": "niroe5tar64",
+    "url": "https://github.com/niroe5tar64"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/niroe5tar64/niro-agent-plugins.git"
+  },
+  "homepage": "https://github.com/niroe5tar64/niro-agent-plugins#readme",
+  "plugins": [
+    {
+      "name": "decision-support",
+      "source": "./decision-support",
+      "description": "意思決定支援ツール：1対1の壁打ち（/discussion）と複数ロール議論（/discussion-forum）"
+    }
+  ],
+  "keywords": [
+    "claude-code",
+    "productivity",
+    "development",
+    "workflow",
+    "automation",
+    "efficiency",
+    "tools"
+  ],
+  "categories": [
+    "productivity",
+    "collaboration",
+    "tools"
+  ]
+}

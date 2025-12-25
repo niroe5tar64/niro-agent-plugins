@@ -5,5 +5,5 @@
   "author": {
     "name": "niroe5tar64"
   },
-  "commands": "commands/"
+  "commands": ["./commands/discussion.md", "./commands/discussion-forum.md"]
 }
