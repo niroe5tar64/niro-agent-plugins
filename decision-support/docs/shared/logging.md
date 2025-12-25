@@ -24,10 +24,6 @@ participants:
   - architect
   - ops-cost
   - risk-security
-tags:
-  - arch
-  - process
-  - product
 ---
 ```
 

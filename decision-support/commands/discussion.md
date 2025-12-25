@@ -65,7 +65,6 @@ argument-hint: [テーマ(任意)]
 date: YYYY-MM-DD
 topic: <topic>
 participants: [] # 参加者/ロールを記載
-tags: [] # docs/decisions/guide/tags.md から選択
 ---
 
 # Summary
@@ -108,10 +107,6 @@ participants:
   - architect
   - ops-cost
   - risk-security
-tags:
-  - arch
-  - process
-  - product
 ---
 ```
 

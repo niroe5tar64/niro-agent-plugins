@@ -2,7 +2,6 @@
 date: YYYY-MM-DD
 topic: <topic>
 participants: [] # 参加者/ロールを記載
-tags: [] # docs/decisions/guide/tags.md から選択
 ---
 
 # Summary
