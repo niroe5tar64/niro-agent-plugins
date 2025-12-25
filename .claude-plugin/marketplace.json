@@ -18,6 +18,11 @@
       "name": "decision-support",
       "source": "./decision-support",
       "description": "意思決定支援ツール：1対1の壁打ち（/discussion）と複数ロール議論（/discussion-forum）"
+    },
+    {
+      "name": "git-ops",
+      "source": "./git-ops",
+      "description": "Git操作効率化ツール：コミットメッセージ生成（/commit）"
     }
   ],
   "keywords": [
