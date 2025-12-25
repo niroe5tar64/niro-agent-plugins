@@ -26,9 +26,11 @@ RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
 RUN npm install -g @anthropic-ai/claude-code@latest
 RUN npm install -g @openai/codex@latest
 
-# Create dev-user with same UID/GID as bun user for compatibility
-RUN groupadd -g 1000 dev-user || true \
-    && useradd -m -u 1000 -g 1000 -G bun -s /bin/bash dev-user
+# Rename existing bun user to dev-user for consistency
+RUN usermod -l dev-user bun \
+    && groupmod -n dev-user bun \
+    && usermod -d /home/dev-user -m dev-user \
+    && usermod -s /bin/bash dev-user
 
 # Set up sudo for dev-user (useful for installing additional tools)
 RUN echo "dev-user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/dev-user \
