@@ -1,0 +1,9 @@
+{
+  "name": "git-ops",
+  "description": "Git操作を効率化するツール集：コミットメッセージ生成（/commit）など",
+  "version": "0.1.0",
+  "author": {
+    "name": "niroe5tar64"
+  },
+  "commands": ["./commands/commit.md"]
+}
