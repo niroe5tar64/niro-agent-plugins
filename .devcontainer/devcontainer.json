@@ -1,0 +1,46 @@
+{
+  "name": "Niro Agent Plugins Dev Environment",
+  "dockerComposeFile": "../docker-compose.dev.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace",
+
+  // VS Code customizations
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "oven.bun-vscode",
+        "dbaeumer.vscode-eslint",
+        "biomejs.biome",
+        "mhutchie.git-graph",
+        "bierner.markdown-mermaid"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome"
+      }
+    }
+  },
+
+  "containerEnv": {
+    "CLAUDE_SETTINGS_PATH": "/workspace/.claude/settings.json"
+  },
+
+  // Container user
+  "remoteUser": "dev-user",
+  "remoteEnv": {
+    "PATH": "/workspace/.devcontainer/bin:${containerEnv:PATH}",
+    "CODEX_HOME": "/workspace/.codex"
+  },
+
+  // Post-create command
+  "postCreateCommand": "bun install",
+
+  // Mount the host's .gitconfig, .claude, and .codex directories
+  "mounts": [
+    "source=${localEnv:HOME}/.gitconfig,target=/home/dev-user/.gitconfig,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh,target=/home/dev-user/.ssh,type=bind,consistency=cached,readonly",
+    "source=${localEnv:HOME}/.claude,target=/home/dev-user/.claude,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.codex,target=/home/dev-user/.codex,type=bind,consistency=cached"
+  ]
+}
