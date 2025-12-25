@@ -10,5 +10,5 @@ if [ -z "${real:-}" ] || [ ! -x "$real" ]; then
   exit 127
 fi
 
-# 常に「承認なし + サンドボックス完全無効」で実行 (--yolo)
-exec "$real" --yolo "$@"
+# 失敗時のみ承認を求める (通常は自動実行)
+exec "$real" --full-auto "$@"
