@@ -23,6 +23,11 @@
       "name": "git-ops",
       "source": "./git-ops",
       "description": "Git操作効率化ツール：コミットメッセージ生成（/commit）"
+    },
+    {
+      "name": "statusline",
+      "source": "./statusline",
+      "description": "カスタムステータスライン：モデル名、gitブランチ、コンテキスト使用量、セッションコストを表示"
     }
   ],
   "keywords": [
