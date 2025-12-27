@@ -1,0 +1,9 @@
+{
+  "name": "bash-safety",
+  "description": "Bashコマンド実行前の安全性チェック：危険なコマンドパターンを検出して実行を防止",
+  "version": "0.1.0",
+  "author": {
+    "name": "niroe5tar64"
+  },
+  "hooks": "./hooks/hooks.json"
+}

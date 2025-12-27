@@ -28,6 +28,11 @@
       "name": "statusline",
       "source": "./statusline",
       "description": "カスタムステータスライン：モデル名、gitブランチ、コンテキスト使用量、セッションコストを表示"
+    },
+    {
+      "name": "bash-safety",
+      "source": "./bash-safety",
+      "description": "Bashコマンド実行前の安全性チェック：危険なコマンドパターンを検出して実行を防止"
     }
   ],
   "keywords": [
