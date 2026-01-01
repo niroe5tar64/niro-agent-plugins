@@ -44,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/workspaces/niro-mcp-servers/.claude/scripts/deny-check.sh"
+            "command": "/workspaces/niro-agent-plugins/.claude/scripts/deny-check.sh"
           }
         ]
       }
@@ -52,12 +52,13 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "/workspaces/niro-mcp-servers/.claude/statusline-command.sh",
+    "command": "/workspaces/niro-agent-plugins/statusline/scripts/statusline-command.sh",
     "padding": 0
   },
   "enabledPlugins": {
     "git-ops@niro-agent-plugins": true,
-    "decision-support@niro-agent-plugins": true
+    "decision-support@niro-agent-plugins": true,
+    "statusline@niro-agent-plugins": true
   },
   "sandbox": {
     "enabled": false,

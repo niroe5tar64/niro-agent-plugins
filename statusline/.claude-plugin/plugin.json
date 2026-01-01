@@ -1,6 +1,6 @@
 {
   "name": "statusline",
-  "description": "カスタムステータスライン：モデル名、gitブランチ、コンテキスト使用量、セッションコストを表示",
+  "description": "カスタムステータスライン表示：モデル・Git情報・コンテキスト使用量・コストを表示",
   "version": "0.1.0",
   "author": {
     "name": "niroe5tar64"
