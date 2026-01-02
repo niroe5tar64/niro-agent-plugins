@@ -52,8 +52,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "/workspaces/niro-agent-plugins/statusline/scripts/statusline-command.sh",
-    "padding": 0
+    "command": "$PWD/statusline/scripts/statusline-command.sh"
   },
   "enabledPlugins": {
     "git-ops@niro-agent-plugins": true,
