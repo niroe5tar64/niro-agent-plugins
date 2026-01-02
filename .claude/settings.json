@@ -57,7 +57,8 @@
   "enabledPlugins": {
     "git-ops@niro-agent-plugins": true,
     "decision-support@niro-agent-plugins": true,
-    "statusline@niro-agent-plugins": true
+    "statusline@niro-agent-plugins": true,
+    "bash-safety@niro-agent-plugins": true
   },
   "sandbox": {
     "enabled": false,
