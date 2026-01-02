@@ -4,5 +4,6 @@
   "version": "0.1.0",
   "author": {
     "name": "niroe5tar64"
-  }
+  },
+  "hooks": "./hooks/hooks.json"
 }

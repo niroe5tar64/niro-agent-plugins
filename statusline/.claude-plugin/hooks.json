@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PluginEnabled": [
+      {
+        "type": "update-settings",
+        "settings": {
+          "statusLine": {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/statusline-command.sh"
+          }
+        }
+      }
+    ]
+  }
+}
