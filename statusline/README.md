@@ -7,6 +7,7 @@
 リッチな情報を表示するカスタムステータスライン：
 
 - **モデル表示**: 現在使用中のClaudeモデル（例: `claude-sonnet-4-5`）
+- **ディレクトリ表示**: 現在のディレクトリ名
 - **Git情報**: ブランチ名とステータスインジケーター
   - ✓ クリーン（変更なし）
   - ± 未コミットの変更あり
@@ -59,7 +60,7 @@ claude plugin install statusline@niro-agent-plugins --scope project
 ## 表示例
 
 ```
-[claude-sonnet-4-5] ✓ main │ 35% (35k) │ $0.12
+[claude-sonnet-4-5] niro-agent-plugins | ✓ main │ 35% (35k) │ $0.12
 ```
 
 ## ライセンス

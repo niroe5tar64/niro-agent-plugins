@@ -62,6 +62,6 @@ if [ "$cost" != "null" ] && [ "$cost" != "0" ]; then
 fi
 
 # Build the status line
-# Format: [Model] Git │ Context │ Cost
-printf "$(printf '\033[0m')[$(printf '\033[36m')%s$(printf '\033[0m')]%s%s%s\n" \
-    "$model" "$git_info" "$context_info" "$cost_info"
+# Format: [Model] Directory Git │ Context │ Cost
+printf "$(printf '\033[0m')[$(printf '\033[36m')%s$(printf '\033[0m')] %s%s%s%s\n" \
+    "$model" "$dir_name" "$git_info" "$context_info" "$cost_info"
