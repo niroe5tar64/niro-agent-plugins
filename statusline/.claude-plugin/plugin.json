@@ -1,7 +1,7 @@
 {
   "name": "statusline",
   "description": "カスタムステータスライン表示：モデル・Git情報・コンテキスト使用量・コストを表示",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "niroe5tar64"
   },
