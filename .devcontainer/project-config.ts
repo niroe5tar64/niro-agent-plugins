@@ -1,7 +1,7 @@
-import type { DevContainerConfig } from "./shared/src/types";
+import type { DevContainerConfig } from './shared/src/types'
 
 export const projectConfig: DevContainerConfig = {
-  name: "Niro Agent Plugins Dev Environment",
+  name: 'Niro Agent Plugins Dev Environment',
 
   customizations: {
     vscode: {
@@ -23,7 +23,7 @@ export const projectConfig: DevContainerConfig = {
 
   // postCreateCommand（bun installを追加）
   // 注: post-create.shが既に実行されているため、その後にbun installを実行
-  postCreateCommand: "bash .devcontainer/post-create.sh && bun install",
-};
+  postCreateCommand: 'bash .devcontainer/post-create.sh && bun install',
+}
 
-export default projectConfig;
+export default projectConfig

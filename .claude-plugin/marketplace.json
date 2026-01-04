@@ -44,9 +44,5 @@
     "efficiency",
     "tools"
   ],
-  "categories": [
-    "productivity",
-    "collaboration",
-    "tools"
-  ]
+  "categories": ["productivity", "collaboration", "tools"]
 }
