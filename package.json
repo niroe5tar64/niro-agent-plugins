@@ -12,7 +12,9 @@
     "clean": "rm -rf dist/ *.tsbuildinfo",
     "format": "biome format --write .",
     "lint": "biome lint --write .",
-    "check": "biome check --write ."
+    "check": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "validate": "bun run typecheck && bun run check"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
