@@ -8,6 +8,7 @@ PreToolUseフックとして動作し、以下を実現：
 
 - **危険なコマンドの検出**: 複数の設定ソースから`permissions.deny`パターンを収集してチェック
 - **多層防御**: プラグインデフォルト + ユーザー設定 + プロジェクト設定を**すべてマージ**
+- **Git管理ファイルの削除許可**: `rm`コマンドが削除対象とするファイルがすべてgit管理されている場合、プラグインデフォルトの拒否パターンをスキップして実行を許可（ただし、設定ファイルのパターンでdenyされている場合はブロック）
 - **コマンド分割解析**: `;`、`&&`、`||`で連結されたコマンドも個別にチェック
 - **Fail-closed設計**: jqが無い場合や設定が読めない場合は安全側（拒否）に倒す
 - **柔軟な設定**: プロジェクト/ユーザーレベルで拒否パターンを追加可能
@@ -66,9 +67,9 @@ claude plugin install bash-safety@niro-agent-plugins --scope project
 {
   "permissions": {
     "deny": [
-      "Bash(npm publish:*)",
-      "Bash(docker rmi:*)",
-      "Bash(:*production:*)"
+      "Bash(npm publish*)",
+      "Bash(docker rmi*)",
+      "Bash(*production*)"
     ]
   }
 }
@@ -79,7 +80,6 @@ claude plugin install bash-safety@niro-agent-plugins --scope project
 ## パターン構文
 
 - `*`: 0文字以上の任意の文字列にマッチ（Bashグロブ）
-- `:*`: コロンを含む任意の文字列（コマンド内の任意の位置）
 - 前後の空白は自動的にトリムされます
 
 ### パターン例
@@ -88,9 +88,9 @@ claude plugin install bash-safety@niro-agent-plugins --scope project
 |---------|------|
 | `rm -rf /` | 完全一致 |
 | `rm -rf /*` | 完全一致 |
-| `sudo :*` | sudo で始まる任意のコマンド |
-| `curl :*\|:*bash:*` | curlでパイプ経由でbashを実行 |
-| `:*authorized_keys:*` | authorized_keysを含む任意のコマンド |
+| `sudo *` | sudo で始まる任意のコマンド |
+| `curl *\|*bash*` | curlでパイプ経由でbashを実行 |
+| `*authorized_keys*` | authorized_keysを含む任意のコマンド |
 
 ## DevContainer環境での使用
 
@@ -120,8 +120,8 @@ claude plugin install bash-safety@niro-agent-plugins --scope project
       "settings": {
         "permissions": {
           "deny": [
-            "Bash(:*production:*)",
-            "Bash(npm publish:*)"
+            "Bash(*production*)",
+            "Bash(npm publish*)"
           ]
         }
       }
@@ -164,14 +164,17 @@ claude plugin install bash-safety@niro-agent-plugins --scope project
 
 1. Claudeが Bash ツールを実行しようとする
 2. deny-check.sh が実行前にフックとして起動
-3. **複数のソースから拒否パターンを読み込み、マージ**
+3. **`rm`コマンドの場合、削除対象がすべてgit管理されているかチェック**
+   - すべてのターゲットがgit管理: プラグインデフォルトパターンをスキップ（設定パターンのみ適用）
+   - 一部または全てが非git管理: 通常処理（すべてのパターンを適用）
+4. **複数のソースから拒否パターンを読み込み、マージ**
    - プラグインデフォルト設定
    - ユーザー設定 (`~/.claude/settings.json`)
    - プロジェクト設定 (`.claude/settings.json`)
    - カスタム設定 (`$CLAUDE_SETTINGS_PATH`)
-4. コマンド全体と分割されたパーツをチェック
-5. パターンにマッチした場合はエラーで拒否（exit 2）
-6. マッチしない場合は許可（exit 0）
+5. コマンド全体と分割されたパーツをチェック
+6. パターンにマッチした場合はエラーで拒否（exit 2）
+7. マッチしない場合は許可（exit 0）
 
 ## 依存関係
 

@@ -18,6 +18,87 @@ matches_deny_pattern() {
   [[ "$cmd" == $pattern ]]
 }
 
+# Check if file is tracked by git
+is_git_tracked() {
+  local file="$1"
+  local dir
+
+  # Get directory of the file (or use file itself if it's a directory)
+  if [ -d "$file" ]; then
+    dir="$file"
+  else
+    dir="$(dirname "$file")"
+  fi
+
+  # Check if we're in a git repository and file is tracked
+  (cd "$dir" 2>/dev/null && git ls-files --error-unmatch "$file" >/dev/null 2>&1)
+}
+
+# Extract file paths from rm command
+extract_rm_targets() {
+  local cmd="$1"
+  local targets=""
+  local in_option=false
+
+  # Skip if not an rm command
+  [[ ! "$cmd" =~ ^rm[[:space:]] ]] && return 1
+
+  # Parse arguments (skip options and flags)
+  for arg in $cmd; do
+    # Skip the 'rm' command itself
+    [ "$arg" = "rm" ] && continue
+
+    # Skip options (starting with -)
+    [[ "$arg" =~ ^- ]] && continue
+
+    # This is a file/directory target
+    if [ -n "$targets" ]; then
+      targets="$targets"$'\n'"$arg"
+    else
+      targets="$arg"
+    fi
+  done
+
+  [ -n "$targets" ] && echo "$targets" && return 0
+  return 1
+}
+
+# Check if all rm targets are git-tracked
+all_rm_targets_git_tracked() {
+  local cmd="$1"
+  local targets
+
+  targets="$(extract_rm_targets "$cmd")" || return 1
+  [ -z "$targets" ] && return 1
+
+  while IFS= read -r target; do
+    target="$(trim "${target:-}")"
+    [ -z "$target" ] && continue
+
+    # Expand glob patterns if they exist
+    if [[ "$target" == *"*"* ]] || [[ "$target" == *"?"* ]]; then
+      # For glob patterns, check each expanded file
+      local expanded_any=false
+      for expanded in $target; do
+        [ ! -e "$expanded" ] && continue
+        expanded_any=true
+        if ! is_git_tracked "$expanded"; then
+          return 1
+        fi
+      done
+      # If nothing was expanded, consider it not git-tracked
+      [ "$expanded_any" = false ] && return 1
+    else
+      # For regular paths, check directly
+      if ! is_git_tracked "$target"; then
+        return 1
+      fi
+    fi
+  done <<<"$targets"
+
+  return 0
+}
+
 die() {
   # Hook error message (stderr) + Claude Code should treat non-zero as deny
   echo "Error: $*" >&2
@@ -65,58 +146,83 @@ extract_patterns_from_file() {
   ' "$file" 2>/dev/null || true
 }
 
-# Collect patterns from multiple sources (all will be merged)
-all_patterns=""
+# Determine project root (from CLAUDE_PROJECT_DIR or fallback to PWD)
+project_root="${CLAUDE_PROJECT_DIR:-$PWD}"
 
-# 1. Plugin default patterns (always loaded if plugin is installed)
+# Separate patterns into two categories:
+# 1. default_patterns: Plugin defaults (skipped for git-tracked files)
+# 2. settings_patterns: User/project settings (always enforced)
+default_patterns=""
+settings_patterns=""
+
+# 1. Plugin default patterns (skipped for git-tracked file deletions)
 if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
   default_config="${CLAUDE_PLUGIN_ROOT}/config/default-deny-patterns.json"
   if [ -f "$default_config" ]; then
-    plugin_patterns="$(extract_patterns_from_file "$default_config")"
-    [ -n "$plugin_patterns" ] && all_patterns="$plugin_patterns"
+    default_patterns="$(extract_patterns_from_file "$default_config")"
   fi
 fi
 
-# 2. User home settings
+# 2. User home settings (always enforced)
 user_settings="$HOME/.claude/settings.json"
 if [ -f "$user_settings" ]; then
   user_patterns="$(extract_patterns_from_file "$user_settings")"
   if [ -n "$user_patterns" ]; then
-    if [ -n "$all_patterns" ]; then
-      all_patterns="$all_patterns"$'\n'"$user_patterns"
-    else
-      all_patterns="$user_patterns"
-    fi
+    settings_patterns="$user_patterns"
   fi
 fi
 
-# 3. Project local settings
-project_settings="$PWD/.claude/settings.json"
+# 3. Project settings (always enforced)
+project_settings="${project_root}/.claude/settings.json"
 if [ -f "$project_settings" ]; then
   project_patterns="$(extract_patterns_from_file "$project_settings")"
   if [ -n "$project_patterns" ]; then
-    if [ -n "$all_patterns" ]; then
-      all_patterns="$all_patterns"$'\n'"$project_patterns"
+    if [ -n "$settings_patterns" ]; then
+      settings_patterns="$settings_patterns"$'\n'"$project_patterns"
     else
-      all_patterns="$project_patterns"
+      settings_patterns="$project_patterns"
     fi
   fi
 fi
 
-# 4. Custom settings path (highest priority override)
-if [ -n "${CLAUDE_SETTINGS_PATH:-}" ] && [ -f "$CLAUDE_SETTINGS_PATH" ]; then
-  custom_patterns="$(extract_patterns_from_file "$CLAUDE_SETTINGS_PATH")"
-  if [ -n "$custom_patterns" ]; then
-    if [ -n "$all_patterns" ]; then
-      all_patterns="$all_patterns"$'\n'"$custom_patterns"
+# 4. Project local settings (always enforced, highest priority)
+project_local_settings="${project_root}/.claude/settings.local.json"
+if [ -f "$project_local_settings" ]; then
+  project_local_patterns="$(extract_patterns_from_file "$project_local_settings")"
+  if [ -n "$project_local_patterns" ]; then
+    if [ -n "$settings_patterns" ]; then
+      settings_patterns="$settings_patterns"$'\n'"$project_local_patterns"
     else
-      all_patterns="$custom_patterns"
+      settings_patterns="$project_local_patterns"
     fi
   fi
 fi
 
-# Remove duplicate patterns (sort -u)
-deny_patterns="$(echo "$all_patterns" | sort -u)"
+# Remove duplicate patterns
+default_patterns="$(echo "$default_patterns" | sort -u)"
+settings_patterns="$(echo "$settings_patterns" | sort -u)"
+
+# Check if command involves git-tracked files (for rm commands)
+skip_default_patterns=false
+if all_rm_targets_git_tracked "$command"; then
+  skip_default_patterns=true
+fi
+
+# Build final deny_patterns list based on context
+if [ "$skip_default_patterns" = true ]; then
+  # Git-tracked file deletion: only apply settings patterns
+  deny_patterns="$settings_patterns"
+else
+  # Normal case: apply both default and settings patterns
+  if [ -n "$default_patterns" ] && [ -n "$settings_patterns" ]; then
+    deny_patterns="$default_patterns"$'\n'"$settings_patterns"
+  elif [ -n "$default_patterns" ]; then
+    deny_patterns="$default_patterns"
+  else
+    deny_patterns="$settings_patterns"
+  fi
+  deny_patterns="$(echo "$deny_patterns" | sort -u)"
+fi
 
 if [ -z "${deny_patterns//[[:space:]]/}" ]; then
   # No patterns found in any source => allow (don't break developers by default)
