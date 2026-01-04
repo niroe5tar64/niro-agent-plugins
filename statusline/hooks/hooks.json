@@ -1,14 +1,13 @@
 {
   "hooks": {
-    "PluginEnabled": [
+    "SessionStart": [
       {
-        "type": "update-settings",
-        "settings": {
-          "statusLine": {
+        "hooks": [
+          {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/statusline-command.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/initialize-settings.sh"
           }
-        }
+        ]
       }
     ]
   }
