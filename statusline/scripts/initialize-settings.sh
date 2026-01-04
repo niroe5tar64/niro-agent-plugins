@@ -2,9 +2,9 @@
 set -euo pipefail
 
 # Initialize Claude Code statusLine configuration
-# This script updates ~/.claude/settings.json to enable the statusline plugin
+# This script updates $CLAUDE_PROJECT_DIR/.claude/settings.local.json to enable the statusline plugin
 
-SETTINGS_FILE="${HOME}/.claude/settings.json"
+SETTINGS_FILE="${CLAUDE_PROJECT_DIR}/.claude/settings.local.json"
 STATUSLINE_COMMAND="${CLAUDE_PLUGIN_ROOT}/scripts/statusline-command.sh"
 
 # Create settings directory if it doesn't exist
