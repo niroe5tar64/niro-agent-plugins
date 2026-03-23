@@ -3,6 +3,18 @@
 # Read JSON input from stdin
 input=$(cat)
 
+# Detect local timezone (TZ env > /etc/localtime symlink > /etc/timezone > UTC)
+if [ -z "$TZ" ]; then
+    if [ -L /etc/localtime ]; then
+        TZ=$(readlink /etc/localtime | sed 's|.*/zoneinfo/||')
+    elif [ -f /etc/timezone ]; then
+        TZ=$(cat /etc/timezone)
+    else
+        TZ="UTC"
+    fi
+fi
+export TZ
+
 # Extract basic information
 model=$(echo "$input" | jq -r '.model.display_name // .model.id')
 current_dir=$(echo "$input" | jq -r '.workspace.current_dir')
@@ -61,7 +73,50 @@ if [ "$cost" != "null" ] && [ "$cost" != "0" ]; then
     cost_info=" │ \$${cost_formatted}"
 fi
 
+# Extract rate limit info (five_hour and seven_day)
+rate_limit_info=""
+
+# Five-hour rate limit
+five_hour_pct=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+five_hour_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
+if [ -n "$five_hour_pct" ]; then
+    five_hour_pct_int=$(printf "%.0f" "$five_hour_pct")
+    if [ "$five_hour_pct_int" -lt 50 ]; then
+        rl_color=$(printf '\033[32m')
+    elif [ "$five_hour_pct_int" -lt 80 ]; then
+        rl_color=$(printf '\033[33m')
+    else
+        rl_color=$(printf '\033[31m')
+    fi
+    if [ -n "$five_hour_reset" ]; then
+        reset_time=$(date -d "@${five_hour_reset}" "+%H:%M" 2>/dev/null || date -r "${five_hour_reset}" "+%H:%M" 2>/dev/null)
+        rate_limit_info="${rate_limit_info} │ 5h: ${rl_color}${five_hour_pct_int}%$(printf '\033[0m') (${reset_time})"
+    else
+        rate_limit_info="${rate_limit_info} │ 5h: ${rl_color}${five_hour_pct_int}%$(printf '\033[0m')"
+    fi
+fi
+
+# Seven-day rate limit
+seven_day_pct=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
+seven_day_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
+if [ -n "$seven_day_pct" ]; then
+    seven_day_pct_int=$(printf "%.0f" "$seven_day_pct")
+    if [ "$seven_day_pct_int" -lt 50 ]; then
+        rl_color=$(printf '\033[32m')
+    elif [ "$seven_day_pct_int" -lt 80 ]; then
+        rl_color=$(printf '\033[33m')
+    else
+        rl_color=$(printf '\033[31m')
+    fi
+    if [ -n "$seven_day_reset" ]; then
+        reset_date=$(date -d "@${seven_day_reset}" "+%m/%d %H:%M" 2>/dev/null || date -r "${seven_day_reset}" "+%m/%d %H:%M" 2>/dev/null)
+        rate_limit_info="${rate_limit_info} │ 7d: ${rl_color}${seven_day_pct_int}%$(printf '\033[0m') (${reset_date})"
+    else
+        rate_limit_info="${rate_limit_info} │ 7d: ${rl_color}${seven_day_pct_int}%$(printf '\033[0m')"
+    fi
+fi
+
 # Build the status line
-# Format: [Model] Directory Git │ Context │ Cost
-printf "$(printf '\033[0m')[$(printf '\033[36m')%s$(printf '\033[0m')] %s%s%s%s\n" \
-    "$model" "$dir_name" "$git_info" "$context_info" "$cost_info"
+# Format: [Model] Directory Git │ Context │ Cost │ 5h: XX% (HH:MM) │ 7d: XX% (MM/DD HH:MM)
+printf "$(printf '\033[0m')[$(printf '\033[36m')%s$(printf '\033[0m')] %s%s%s%s%s\n" \
+    "$model" "$dir_name" "$git_info" "$context_info" "$cost_info" "$rate_limit_info"
