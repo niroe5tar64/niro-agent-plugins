@@ -1,6 +1,6 @@
 {
   "name": "claude-code-plugins",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "description": "業務効率化のためのClaude Codeプラグイン群",
   "scripts": {
