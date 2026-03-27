@@ -20,7 +20,7 @@
 
 ## インストール
 
-### このマーケットプレイスから
+### 1. プラグインのインストール
 
 ```bash
 # ユーザースコープ（すべてのプロジェクトで利用可能）
@@ -30,18 +30,33 @@ claude plugin install statusline@niro-agent-plugins --scope user
 claude plugin install statusline@niro-agent-plugins --scope project
 ```
 
-## 設定
+### 2. statusline の設定を適用する
 
-インストール後、`.claude/settings.json` に以下を追加：
+Claude Code セッション内で以下のコマンドを実行します：
 
-```json
-{
-  "statusLine": {
-    "type": "command",
-    "command": "${CLAUDE_PLUGIN_ROOT}/scripts/statusline-command.sh"
-  }
-}
 ```
+/install-statusline
+```
+
+これにより、プロジェクトの `.claude/settings.local.json` に `statusLine` の設定が書き込まれます。
+
+#### すでに `statusLine` が設定されている場合
+
+| 状況 | 挙動 |
+|---|---|
+| このプラグインと同じ値が設定済み | 何もしない（already configured と表示） |
+| 別の値が設定されている | 警告を出してスキップ（上書きしない） |
+
+別の値が設定されていて上書きしたい場合は、`settings.local.json` から `statusLine` を手動で削除してから再度 `/install-statusline` を実行してください。
+
+## アンインストール
+
+```
+/uninstall-statusline
+```
+
+`settings.local.json` の `statusLine` を削除します。
+このプラグインが設定した値と一致する場合のみ削除します（他の設定は変更しません）。
 
 ## DevContainer環境での使用
 
