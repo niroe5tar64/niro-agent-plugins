@@ -1,7 +1,7 @@
 {
   "name": "niro-agent-plugins",
   "displayName": "Claude Code Plugins Collection",
-  "description": "開発効率化のためのClaude Codeプラグイン群（意思決定支援など）",
+  "description": "開発効率化のためのClaude Codeプラグイン群",
   "version": "0.1.0",
   "owner": {
     "name": "niroe5tar64",
@@ -15,11 +15,6 @@
   "homepage": "https://github.com/niroe5tar64/niro-agent-plugins#readme",
   "plugins": [
     {
-      "name": "decision-support",
-      "source": "./decision-support",
-      "description": "意思決定支援ツール：1対1の壁打ち（/discussion）と複数ロール議論（/discussion-forum）"
-    },
-    {
       "name": "git-ops",
       "source": "./git-ops",
       "description": "Git操作効率化ツール：コミットメッセージ生成"
@@ -28,11 +23,6 @@
       "name": "statusline",
       "source": "./statusline",
       "description": "カスタムステータスライン：モデル名、gitブランチ、コンテキスト使用量、セッションコストを表示"
-    },
-    {
-      "name": "bash-safety",
-      "source": "./bash-safety",
-      "description": "Bashコマンド実行前の安全性チェック：危険なコマンドパターンを検出して実行を防止"
     }
   ],
   "keywords": [
