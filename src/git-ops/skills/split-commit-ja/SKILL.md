@@ -1,6 +1,7 @@
 ---
 name: split-commit-ja
 description: 大きな変更を意味のある単位に分割して複数コミットへ整理し、各コミットを Conventional Commits の prefix 付き日本語 subject で作成する。ユーザーが「差分を小分けでコミットしたい」「変更を目的ごとに分割したい」「大規模diffを安全に複数コミット化したい」と依頼したときに使う。
+model: haiku
 ---
 
 # Git Split Commit JA

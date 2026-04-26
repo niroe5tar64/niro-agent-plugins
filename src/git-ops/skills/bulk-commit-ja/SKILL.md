@@ -1,6 +1,7 @@
 ---
 name: bulk-commit-ja
 description: ステージ済み変更から軽量な手順でコミットメッセージを生成し、Conventional Commits の prefix 付き日本語 subject でコミットする。ユーザーがコミット実行を依頼したとき、/commit 相当の挙動を求めたとき、または AI のコミット文面を規約で統一したいときに使う。
+model: haiku
 ---
 
 # Git Commit JA Prefix
