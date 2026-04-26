@@ -4,31 +4,8 @@
     "deny": [],
     "ask": []
   },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/workspaces/niro-agent-plugins/.claude/scripts/deny-check.sh"
-          }
-        ]
-      }
-    ]
-  },
   "statusLine": {
     "type": "command",
     "command": "$PWD/statusline/scripts/statusline-command.sh"
-  },
-  "enabledPlugins": {
-    "git-ops@niro-agent-plugins": true,
-    "decision-support@niro-agent-plugins": true,
-    "statusline@niro-agent-plugins": true,
-    "bash-safety@niro-agent-plugins": true
-  },
-  "sandbox": {
-    "enabled": false,
-    "allowUnsandboxedCommands": true
   }
 }
