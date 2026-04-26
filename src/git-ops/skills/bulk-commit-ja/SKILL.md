@@ -45,7 +45,7 @@ model: haiku
 
 ### Step 1: 軽量確認
 
-- `git status` でステージ有無を確認する。ステージが無ければ報告して終了する。
+- `git status` でステージ有無を確認する。ステージが無く、かつ未追跡ファイルや未ステージの変更がある場合は `git add -A` ですべてをステージして続行する。ステージも変更も無ければ報告して終了する。
 - `git diff --cached --name-only` で変更ファイル一覧を取得する。
 - `git diff --cached --shortstat` で変更規模を把握する。
 - `git diff --cached --stat` で変更の偏りを確認する。
