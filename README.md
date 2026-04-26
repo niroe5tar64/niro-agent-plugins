@@ -10,13 +10,13 @@ Claude Code向けのプラグイン集。
 
 ## 含まれるプラグイン
 
-### [git-ops](./git-ops/)
+### [git-ops](./src/git-ops/)
 
 Git操作を効率化するプラグイン。
 
 - `/commit` - ステージされた変更から適切なコミットメッセージを生成
 
-### [statusline](./statusline/)
+### [statusline](./src/statusline/)
 
 カスタムステータスラインを提供するプラグイン。
 

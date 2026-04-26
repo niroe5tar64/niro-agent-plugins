@@ -16,12 +16,12 @@
   "plugins": [
     {
       "name": "git-ops",
-      "source": "./git-ops",
+      "source": "./src/git-ops",
       "description": "Git操作効率化ツール：コミットメッセージ生成"
     },
     {
       "name": "statusline",
-      "source": "./statusline",
+      "source": "./src/statusline",
       "description": "カスタムステータスライン：モデル名、gitブランチ、コンテキスト使用量、セッションコストを表示"
     }
   ],
