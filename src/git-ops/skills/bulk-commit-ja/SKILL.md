@@ -84,10 +84,11 @@ model: haiku
 ### Step 6: 実行
 
 - 実行前に、作成したコミットメッセージをチャットで短く提示する。
-- 実行時は必ず `scripts/ai_commit.sh` を使って検証付きでコミットする。
+- `<base_dir>` はシステムが提供する `Base directory for this skill` の値で解決する。
+- 実行時は必ず `<base_dir>/scripts/ai_commit.sh` を使って検証付きでコミットする。
 
 ```bash
-scripts/ai_commit.sh <<'EOF'
+<base_dir>/scripts/ai_commit.sh <<'EOF'
 <type>: <subject>
 
 - 変更点（必要なら）

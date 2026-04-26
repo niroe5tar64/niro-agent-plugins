@@ -22,7 +22,8 @@ model: haiku
 
 ### Step 1: 変更棚卸し（軽量）
 
-- まず `scripts/split_inspect.sh` を実行する。
+- `<base_dir>` はシステムが提供する `Base directory for this skill` の値で解決する。
+- まず `<base_dir>/scripts/split_inspect.sh` を実行する。
 - 必要に応じて以下を使い、変更規模と偏りだけを確認する。
   - `git status --short`
   - `git diff --name-only`
@@ -61,10 +62,10 @@ model: haiku
 
 3. メッセージを作成してコミット
 - 1行目を `<type>: <日本語subject>` にする。
-- 実行時は必ず `scripts/ai_commit.sh` を使う。
+- 実行時は必ず `<base_dir>/scripts/ai_commit.sh` を使う。
 
 ```bash
-scripts/ai_commit.sh <<'__COMMIT__'
+<base_dir>/scripts/ai_commit.sh <<'__COMMIT__'
 <type>: <subject>
 
 - 必要なら本文
