@@ -22,7 +22,7 @@
     {
       "name": "git-ops",
       "source": "./git-ops",
-      "description": "Git操作効率化ツール：コミットメッセージ生成（/commit）"
+      "description": "Git操作効率化ツール：コミットメッセージ生成"
     },
     {
       "name": "statusline",

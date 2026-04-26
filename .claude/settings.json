@@ -4,6 +4,17 @@
     "deny": [],
     "ask": []
   },
+  "extraKnownMarketplaces": {
+    "niro-agent-plugins": {
+      "source": {
+        "source": "directory",
+        "path": "/workspaces/niro-agent-plugins"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "git-ops@niro-agent-plugins": true
+  },
   "statusLine": {
     "type": "command",
     "command": "$PWD/statusline/scripts/statusline-command.sh"

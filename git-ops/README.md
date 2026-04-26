@@ -2,45 +2,40 @@
 
 Git操作を効率化するためのClaude Codeプラグイン。
 
-## 提供コマンド
+## 提供スキル
 
-### `/commit` - コミットメッセージ生成
+### `git-ops:bulk-commit-ja` - 日本語prefixコミット
 
-ステージされた変更から適切なコミットメッセージを生成し、コミットを作成します。
+ステージされた変更から、軽量な手順でコミットメッセージを生成し、Conventional Commits の prefix 付き日本語 subject でコミットします。
 
 **特徴**
 
 - トークン使用量を最小限に抑える軽量な手順
 - 変更規模に応じた適応的な差分読み取り
-- Conventional Commits形式でのメッセージ生成
+- `<type>: <日本語subject>` 形式でのメッセージ生成
 - 混在した変更の検出とステージ見直し提案
 
-**コミットメッセージ形式**
+### `git-ops:git-split-commit-ja` - 変更分割コミット
+
+大きな差分を目的別の小さなコミットへ分割し、各コミットを Conventional Commits の prefix 付き日本語 subject で作成します。
+
+**特徴**
+
+- 複数目的の変更を意味のある単位に分割
+- 2〜7コミットを目安とした分割計画の自動作成
+- 全コミットで統一された日本語prefix形式
+
+## コミットメッセージ形式
 
 ```
-<type>: <subject>
+<type>: <日本語subject>
 
 - 変更点（必要な場合）
 
 Co-Authored-By: <co-author>
 ```
 
-**対応するtype**
-
-- `feat` - 新機能・新しいふるまい
-- `fix` - バグ修正
-- `refactor` - ふるまい変更なしの設計改善
-- `docs` - ドキュメント
-- `style` - フォーマットのみ
-- `test` - テスト関連
-- `chore` - 雑務（依存更新、設定など）
-- `perf` - パフォーマンス改善
-
-**用途**
-
-- ステージされた変更の軽量なコミット
-- 適切なコミットメッセージの自動生成
-- 変更規模に応じた効率的な処理
+**対応するtype**: `feat` / `fix` / `refactor` / `docs` / `style` / `test` / `chore` / `perf`
 
 ## ディレクトリ構成
 
@@ -48,33 +43,19 @@ Co-Authored-By: <co-author>
 git-ops/
 ├── .claude-plugin/
 │   └── plugin.json
-├── commands/
-│   └── commit.md
+├── skills/
+│   ├── bulk-commit-ja/
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   │       └── ai_commit.sh
+│   └── git-split-commit-ja/
+│       ├── SKILL.md
+│       └── scripts/
+│           ├── ai_commit.sh
+│           └── split_inspect.sh
 └── README.md
 ```
 
 ## 使い方
 
-1. 変更をステージング: `git add <files>`
-2. コマンドを実行: `/commit` または `/commit 追加メッセージ`
-3. 生成されたコミットメッセージを確認
-4. 自動的にコミットが作成される
-
-**オプション引数**
-
-コマンド実行時に追加メッセージを指定できます：
-
-```
-/commit ユーザー認証機能の追加
-```
-
-この追加メッセージはコミットメッセージのsubjectや本文に反映されます。
-
-## 実行手順
-
-1. ステージ状況の確認（軽量）
-2. diff読み取り範囲の決定
-3. 変更規模に応じた処理（要約モード/全文読み取り）
-4. コミットメッセージの生成と実行
-
-詳細は `commands/commit.md` を参照してください。
+スキルはClaude Codeが自動的に呼び出します。`git-ops`プラグインをインストールすることで利用可能になります。
