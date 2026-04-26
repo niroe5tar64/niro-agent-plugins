@@ -2,7 +2,7 @@
   "name": "niro-agent-plugins",
   "displayName": "Claude Code Plugins Collection",
   "description": "開発効率化のためのClaude Codeプラグイン群",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "owner": {
     "name": "niroe5tar64",
     "url": "https://github.com/niroe5tar64"
