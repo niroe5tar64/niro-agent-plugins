@@ -1,3 +1,0 @@
-[submodule ".devcontainer/shared"]
-	path = .devcontainer/shared
-	url = https://github.com/niroe5tar64/shared-devcontainer.git
