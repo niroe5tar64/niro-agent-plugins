@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "defaultMode": "auto"
   },
   "extraKnownMarketplaces": {
     "niro-agent-plugins": {
