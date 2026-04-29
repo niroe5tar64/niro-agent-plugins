@@ -1,0 +1,30 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: docker/workspace/Dockerfile
+    image: niro-agent-plugins-workspace:local
+    container_name: niro-agent-plugins-workspace
+    working_dir: /workspace
+    user: dev-user
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/workspace:cached
+      - ${HOME}/.gitconfig:/home/dev-user/.gitconfig:ro
+      - claude-home:/home/dev-user/.claude
+      - workspace-node-modules:/workspace/node_modules
+      - workspace-pnpm-store:/home/dev-user/.local/share/pnpm/store
+    environment:
+      TZ: Asia/Tokyo
+      SHELL: /usr/bin/zsh
+      PATH: /home/dev-user/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      MISE_TRUSTED_CONFIG_PATHS: /workspace
+    ports:
+      - "3100-3110:3100-3110"
+    command: sleep infinity
+
+volumes:
+  claude-home:
+  workspace-node-modules:
+  workspace-pnpm-store:
