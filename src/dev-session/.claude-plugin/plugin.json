@@ -1,0 +1,16 @@
+{
+  "name": "dev-session",
+  "description": "AIとの開発会話を作業状態として管理するセッション運用プラグイン。短文応答・1質問運用・決定/仮説/未確認の三層分離を強制し、決定や論点をMarkdownファイル群へ常時写像する。実装やコミットは行わない。",
+  "version": "0.1.0",
+  "author": {
+    "name": "niroe5tar64"
+  },
+  "skills": "./skills/",
+  "commands": [
+    "./commands/session-start.md",
+    "./commands/session-update.md",
+    "./commands/session-review.md",
+    "./commands/session-handoff.md",
+    "./commands/session-resume.md"
+  ]
+}
