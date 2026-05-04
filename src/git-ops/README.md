@@ -15,7 +15,7 @@ Git操作を効率化するためのClaude Codeプラグイン。
 - `<type>: <日本語subject>` 形式でのメッセージ生成
 - 混在した変更の検出とステージ見直し提案
 
-### `git-ops:git-split-commit-ja` - 変更分割コミット
+### `git-ops:split-commit-ja` - 変更分割コミット
 
 大きな差分を目的別の小さなコミットへ分割し、各コミットを Conventional Commits の prefix 付き日本語 subject で作成します。
 
@@ -48,7 +48,7 @@ git-ops/
 │   │   ├── SKILL.md
 │   │   └── scripts/
 │   │       └── ai_commit.sh
-│   └── git-split-commit-ja/
+│   └── split-commit-ja/
 │       ├── SKILL.md
 │       └── scripts/
 │           ├── ai_commit.sh
