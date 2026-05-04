@@ -1,7 +1,7 @@
 {
   "name": "git-ops",
   "description": "Git操作を効率化するツール集：コミットメッセージ生成（日本語prefix）、変更分割など",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "niroe5tar64"
   },
