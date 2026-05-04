@@ -18,6 +18,6 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "$CLAUDE_PROJECT_DIR/src/statusline/scripts/statusline-command.sh"
+    "command": "\"$CLAUDE_PROJECT_DIR\"/src/statusline/scripts/statusline-command.sh"
   }
 }
