@@ -53,7 +53,7 @@ if ! printf '%s\n' "$first_line" | grep -Eq "$type_pattern"; then
   exit 1
 fi
 
-if ! printf '%s\n' "$first_line" | grep -Pq '[\p{Hiragana}\p{Katakana}\p{Han}ー々]'; then
+if ! printf '%s\n' "$first_line" | perl -CSD -ne 'exit 0 if /\p{Hiragana}|\p{Katakana}|\p{Han}|[ー々]/; exit 1'; then
   echo "Summary must include Japanese characters." >&2
   exit 1
 fi
