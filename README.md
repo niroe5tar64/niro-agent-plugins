@@ -31,3 +31,10 @@ AIとの開発会話を作業状態として管理するセッション運用プ
 - `docs/ai-sessions/{name}/` に状態ファイルを継続的に写像
 - `/session-start` `/session-update` `/session-review` `/session-handoff` `/session-resume` の5コマンドを提供
 
+### [grill](./src/grill/)
+
+プランや設計を AI に徹底的にインタビューさせるスキル集（[mattpocock/skills](https://github.com/mattpocock/skills) の日本語ポート）。
+
+- `grill:me-ja` - 任意のプラン・設計を 1 ターン 1 質問で詰める汎用版
+- `grill:with-docs-ja` - `CONTEXT.md`（ドメイン辞書）と `docs/adr/` をインラインで更新しながら詰める版
+

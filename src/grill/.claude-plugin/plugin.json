@@ -1,0 +1,9 @@
+{
+  "name": "grill",
+  "description": "プランや設計を AI に徹底的にグリル（追及）させて、決定木の全分岐を潰すまで 1 問ずつインタビューさせるスキル集。CONTEXT.md とドメイン辞書に対するストレステストも提供する。mattpocock/skills の grill-me / grill-with-docs を日本語化した自分用ポート。",
+  "version": "0.1.0",
+  "author": {
+    "name": "niroe5tar64"
+  },
+  "skills": "./skills/"
+}
