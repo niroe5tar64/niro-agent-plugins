@@ -1,0 +1,10 @@
+{
+  "name": "writing-quality",
+  "description": "認知科学の知見（認知負荷理論・談話理解・情報過多研究）に基づいて文書の読みやすさを改善するプラグイン。執筆前の読者宣言（audience-brief）と、執筆後の認知負荷ベース簡素化レビュー（deslop）を提供する。根拠文献（DOI 検証済み）を docs/ に同梱。",
+  "version": "0.1.0",
+  "author": {
+    "name": "niroe5tar64"
+  },
+  "skills": "./skills/",
+  "commands": ["./commands/deslop.md", "./commands/audience-brief.md"]
+}

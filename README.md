@@ -38,3 +38,11 @@ AIとの開発会話を作業状態として管理するセッション運用プ
 - `grill:me-ja` - 任意のプラン・設計を 1 ターン 1 質問で詰める汎用版
 - `grill:with-docs-ja` - `CONTEXT.md`（ドメイン辞書）と `docs/adr/` をインラインで更新しながら詰める版
 
+### [writing-quality](./src/writing-quality/)
+
+認知科学の知見（認知負荷理論・談話理解・情報過多研究）に基づいて文書の読みやすさを改善するプラグイン。
+
+- `writing-quality:audience-brief` - 執筆前に読者・目的・読後の行動を確定して「読者宣言」を作る
+- `writing-quality:deslop` - 文書を認知負荷ベースのチェックリストで点検し、1 候補ずつ承認を取りながら簡素化
+- 根拠文献（DOI/URL 検証済み・査読/プレプリント/企業調査を区別）を `docs/research-basis.md` として同梱
+

@@ -33,6 +33,11 @@
       "name": "grill",
       "source": "./src/grill",
       "description": "プランや設計を AI に徹底的にインタビューさせるスキル集：1質問運用・推奨回答必須・CONTEXT.md/ADR インライン更新版も提供。mattpocock/skills の grill-me / grill-with-docs を日本語化"
+    },
+    {
+      "name": "writing-quality",
+      "source": "./src/writing-quality",
+      "description": "認知科学の知見（認知負荷理論・談話理解・情報過多研究）に基づく文書品質改善：執筆前の読者宣言（audience-brief）と執筆後の簡素化レビュー（deslop）。根拠文献（DOI 検証済み）を同梱"
     }
   ],
   "keywords": [
